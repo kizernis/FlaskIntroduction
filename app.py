@@ -16,7 +16,7 @@ class Todo(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
-@app.route(root_dir + '/', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
@@ -31,7 +31,7 @@ def index():
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('index.html', tasks=tasks)
 
-@app.route(root_dir + '/delete/<int:id>')
+@app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
     try:
@@ -41,7 +41,7 @@ def delete(id):
     except:
         return 'Error deleting'
 
-@app.route(root_dir + '/update/<int:id>', methods=['POST', 'GET'])
+@app.route('/update/<int:id>', methods=['POST', 'GET'])
 def update(id):
     task_to_update = Todo.query.get_or_404(id)
     if request.method == 'POST':
