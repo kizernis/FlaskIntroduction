@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-root_dir = '/flask'
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
@@ -24,7 +22,7 @@ def index():
         try:
             db.session.add(new_task)
             db.session.commit()
-            return redirect(root_dir + '/')
+            return redirect('/')
         except:
             return 'Error adding'
     else:
@@ -37,7 +35,7 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return redirect(root_dir + '/')
+        return redirect('/')
     except:
         return 'Error deleting'
 
@@ -48,7 +46,7 @@ def update(id):
         task_to_update.content = request.form['content']
         try:
             db.session.commit()
-            return redirect(root_dir + '/')
+            return redirect('/')
         except:
             return 'Error updating'
     else:
